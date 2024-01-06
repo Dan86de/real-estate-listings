@@ -15,6 +15,7 @@ import { CacheService } from './cache/cache.service';
 import { TransformResponseInterceptor } from './interceptors/transform-response/transform-response.interceptor';
 import { LoggerService } from './logger/logger.service';
 import { LoggerMiddleware } from './middleware/logger/logger.middleware';
+import { QueueModule } from './queue/queue.module';
 
 @Global()
 @Module({
@@ -41,6 +42,7 @@ import { LoggerMiddleware } from './middleware/logger/logger.middleware';
       },
       inject: [ConfigService],
     }),
+    QueueModule,
   ],
   providers: [
     {
