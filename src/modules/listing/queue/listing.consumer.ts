@@ -6,19 +6,16 @@ import {
 } from '../../../core/queue/queue.constants';
 import { BaseConsumer } from '../../../core/queue/base.consumer';
 import { CreateListingImageDto } from '../dto/create-listinig-image.dto';
-import { FileService } from '../../../utilities/file/file.service';
+import { ListingService } from '../listing.service';
 
 @Processor(LISTING_QUEUE)
 export class ListingConsumer extends BaseConsumer {
-  constructor(private readonly fileService: FileService) {
+  constructor(private readonly listingService: ListingService) {
     super();
   }
 
   @Process(CREATE_LISTING_IMAGE)
   async createListingImage(job: Job<CreateListingImageDto>) {
-    const buffer = this.fileService.base64ToBuffer(job.data.base64String);
-    // upload file to GCS
-    // save a reference to the file in the database
-    console.log(`FILE PROCESSED ASYNC IN QUEUE`);
+    await this.listingService.createListingImage(job.data);
   }
 }
